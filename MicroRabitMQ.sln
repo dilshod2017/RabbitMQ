@@ -19,23 +19,23 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbit.Infra.Buss", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbit.Infra.IoC", "MicroRabbit.Infra.IoC\MicroRabbit.Infra.IoC.csproj", "{7F09F504-1D0A-480F-8282-9981D4E31F57}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{7A5879E2-2940-4F3B-99D1-BFB7822E945F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices.Admin.API", "Microservices.Admin.API", "{7A5879E2-2940-4F3B-99D1-BFB7822E945F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{5FBFC224-A91D-48E0-9DD4-7C4BE1A9D1F8}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices.Admin.APP", "Microservices.Admin.APP", "{5FBFC224-A91D-48E0-9DD4-7C4BE1A9D1F8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{351C8F4D-95B1-4C09-BD15-32D751D883CF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices.Admin.data", "Microservices.Admin.data", "{351C8F4D-95B1-4C09-BD15-32D751D883CF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{FA418B32-A02A-4BD7-B986-55A162C1DF39}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices.Admin.Domain", "Microservices.Admin.Domain", "{FA418B32-A02A-4BD7-B986-55A162C1DF39}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbit.Microservices.AdminAPI", "MicroRabbit.Microservices.AdminAPI\MicroRabbit.Microservices.AdminAPI.csproj", "{C4B3D4A9-B63E-4F8E-AB3B-C951F758B9F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservices.Admin", "MicroRabbit.Microservices.AdminAPI\Microservices.Admin.csproj", "{C4B3D4A9-B63E-4F8E-AB3B-C951F758B9F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbot.Microservices.Admin.Data", "MicroRabbot.Microservices.Admin.Data\MicroRabbot.Microservices.Admin.Data.csproj", "{0F580E57-82E8-4D2F-9856-9FEE385B5A5E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservices.Admin.Data", "MicroRabbot.Microservices.Admin.Data\Microservices.Admin.Data.csproj", "{0F580E57-82E8-4D2F-9856-9FEE385B5A5E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{BA988D96-B895-4E73-8E35-69554F25378B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microservices.Admin", "Microservices.Admin", "{BA988D96-B895-4E73-8E35-69554F25378B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbit.Microservices.Admin.Domain", "MicroRabbit.Microservices.Admin.Domain\MicroRabbit.Microservices.Admin.Domain.csproj", "{0C3FB7E3-57B9-4ADC-A4EA-593E3E9D96BD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservices.Admin.Domain", "MicroRabbit.Microservices.Admin.Domain\Microservices.Admin.Domain.csproj", "{0C3FB7E3-57B9-4ADC-A4EA-593E3E9D96BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroRabbit.Microservices.Admin.Application", "MicroRabbit.Microservices.Admin.Application\MicroRabbit.Microservices.Admin.Application.csproj", "{D49280D8-0BAA-457C-80DC-3D22801256EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microservices.Admin.Application", "MicroRabbit.Microservices.Admin.Application\Microservices.Admin.Application.csproj", "{D49280D8-0BAA-457C-80DC-3D22801256EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
