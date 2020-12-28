@@ -1,13 +1,16 @@
 ﻿using MicroRabot.Domain.Core.Buss;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
+using MicroRabbit.Domain.Core.Extendsions;
 using MicroRabot.Domain.Core.Commands;
 using MicroRabot.Domain.Core.Events;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace MicroRabbit.Infra.Buss
 {
@@ -47,7 +50,65 @@ namespace MicroRabbit.Infra.Buss
 
         public void Subscribe<T, TH>() where T : Event where TH : IEventHandler<T>
         {
-            throw new NotImplementedException();
+            var eventName = typeof(T).Name;
+            var handlerType = typeof(T);
+            //extension method AddIfNotExists ./../extensions/AddIfNotExists
+            _eventTypes.AddIfNotExists(handlerType);
+            //extension method AddIfNotExists ./../extensions/AddKeyIfNotExists
+            _handlers.AddKeyIfNotExists(eventName);
+            if (_handlers[eventName].Any(s => s.GetType() == handlerType))
+            {
+                throw new ArgumentException($"Handler type {handlerType.Name} already is registered for '{eventName}'",
+                    nameof(handlerType));
+            }
+            _handlers[eventName].Add(handlerType);
+            StartBasicConsume<T>();
+        }
+
+        private void StartBasicConsume<T>() where T : Event
+        {
+            var factory = new ConnectionFactory() {HostName = "localhost", DispatchConsumersAsync = true};
+            using var connection = factory.CreateConnection();
+            using var channel = connection?.CreateModel();
+            var eventName = typeof(T).Name;
+            channel.QueueDeclare(eventName, false, false, false, null);
+            var consumer = new AsyncEventingBasicConsumer(channel);
+            consumer.Received += Consumer_Received;
+            channel.BasicConsume(eventName, true, consumer);
+
+        }
+
+        private async Task Consumer_Received(object sender, BasicDeliverEventArgs e)
+        {
+            var eventName = e.RoutingKey;
+            var message = Encoding.UTF8.GetString(e.Body.ToArray());
+            try
+            {
+                await ProccessEvent(eventName, message).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private async Task ProccessEvent(string eventName, string message)
+        {
+            if (_handlers.ContainsKey(eventName))
+            {
+                var subscriptions = _handlers[eventName];
+                foreach (var subscription in subscriptions)
+                {
+                    var handler = Activator.CreateInstance(subscription);
+                    if (handler != null)
+                    {
+                        var eventType = _eventTypes.SingleOrDefault(t => t.Name == eventName);
+                        var @event = JsonConvert.DeserializeObject(message, eventType);
+                        var concriteType = typeof(IEventHandler<>).MakeGenericType(eventType);
+                        await (Task) concriteType.GetMethod("Handle").Invoke(handler, new object[] {@event});
+                    }
+                }
+            }
         }
     }
 }
