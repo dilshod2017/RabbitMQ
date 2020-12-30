@@ -21,4 +21,8 @@
     <Folder Include="Repository\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroRabbit.Users.Domain\MicroRabbit.Users.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
