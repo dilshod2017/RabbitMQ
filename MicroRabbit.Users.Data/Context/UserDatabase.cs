@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MicroRabbit.Users.Data.Context
 {
-    public class UserDbContext : DbContext
+    public class UserDatabase : DbContext
     {
-        public UserDbContext(DbContextOptions options) : base(options)
+        public UserDatabase(DbContextOptions options) : base(options)
         {
             
         }

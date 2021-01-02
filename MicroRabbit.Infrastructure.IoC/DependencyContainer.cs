@@ -1,4 +1,5 @@
-﻿using MicroRabbit.Domain.Core.Bus;
+﻿using System;
+using MicroRabbit.Domain.Core.Bus;
 using MicroRabbit.Infrastructure.Bus;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -10,7 +11,6 @@ namespace MicroRabbit.Infrastructure.IoC
         {
             //domain bus
             services?.AddTransient<IEventBus, RabbitMQBuss>();
-
         }
     }
 }
