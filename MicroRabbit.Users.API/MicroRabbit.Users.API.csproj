@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MicroRabbit.Infrastructure.IoC\MicroRabbit.Infrastructure.IoC.csproj" />
     <ProjectReference Include="..\MicroRabbit.Users.Data\MicroRabbit.Users.Data.csproj" />
     <ProjectReference Include="..\MicroRabbit.Users.Domain\MicroRabbit.Users.Domain.csproj" />

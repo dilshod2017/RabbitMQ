@@ -1,18 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using LinqToDB;
+using LinqToDB.Data;
 using MicroRabbit.Users.Domain.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace MicroRabbit.Users.Data.Context
 {
-    public class UserDatabase : DbContext
+
+    public class UserDatabase : DataConnection
     {
-        public UserDatabase(DbContextOptions options) : base(options)
+        public UserDatabase() : base("local")
         {
-            
+
         }
 
-        public DbSet<User> Users { get; set; }
+        public ITable<User> UserTables => GetTable<User>();
+    }
+    public static class UserDataBaseFactory
+    {
+
+        public static Lazy<UserDatabase> NewUserDataBase => new Lazy<UserDatabase>();
     }
 }

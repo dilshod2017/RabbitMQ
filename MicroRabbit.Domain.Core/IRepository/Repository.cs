@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using LinqToDB;
 using LinqToDB.Data;
@@ -33,12 +30,20 @@ namespace MicroRabbit.Domain.Core.IRepository
 
         protected async Task<IEnumerable<T>> GetAllAsync(Func<T, bool> predicate = null)
         {
-            using var database = _db;
-            var method = typeof(DataConnection).GetMethods().FirstOrDefault(s => s.Name ==
-                nameof(DataConnection.GetTable));
-            var genericMethod = method?.MakeGenericMethod(_Ttype);
-            var list =await ((ITable<T>) genericMethod.Invoke(database, null)).ToArrayAsync();
-            return predicate != null ? list.Where(predicate) : list;
+            try
+            {
+                using var database = _db;
+                var method = typeof(DataConnection).GetMethods().FirstOrDefault(s => s.Name ==
+                    nameof(DataConnection.GetTable));
+                var genericMethod = method?.MakeGenericMethod(_Ttype);
+                var list =await ((ITable<T>) genericMethod.Invoke(database, null)).ToArrayAsync();
+                return predicate != null ? list.Where(predicate) : list;
+            }
+            catch (Exception a)
+            {
+                Console.WriteLine(a);
+                throw;
+            }
 
         }
 

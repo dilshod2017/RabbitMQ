@@ -1,5 +1,6 @@
 using System;
-using Autofac;
+using System.Text.Json.Serialization;
+using LinqToDB.Data;
 using MicroRabbit.Infrastructure.IoC;
 using MicroRabbit.Users.Data.Context;
 using MicroRabbit.Users.Domain.Models;
@@ -16,32 +17,22 @@ namespace MicroRabbit.Users.API
     {
         public IConfiguration Configuration { get; }
 
-        public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
-            Configuration = builder.Build();
+            Configuration = configuration;
+            DataConnection.DefaultSettings = new DbSetting(Configuration.GetConnectionString("local"));
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-
-            builder.RegisterType<UserDatabase>().As<IDisposable>();
-        }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-
-            DependencyContainer.RegisterServices(services);
+             services.AddHttpClient();
+             services.AddControllers()
+                .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+            (services ?? throw new ArgumentNullException(nameof(services))).AddSingleton<DbLoggerCategory.Database>();
+            // DependencyContainer.RegisterServices(services);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
