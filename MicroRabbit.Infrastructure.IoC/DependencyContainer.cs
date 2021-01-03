@@ -10,7 +10,7 @@ namespace MicroRabbit.Infrastructure.IoC
         public static void RegisterServices(IServiceCollection services)
         {
             //domain bus
-            services?.AddTransient<IEventBus, RabbitMQBuss>();
+            // services?.AddTransient<IEventBus, RabbitMQBuss>();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace MicroRabbit.Users.API
              services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             (services ?? throw new ArgumentNullException(nameof(services))).AddSingleton<DbLoggerCategory.Database>();
-            // DependencyContainer.RegisterServices(services);
+            DependencyContainer.RegisterServices(services);
         }
 
          public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
