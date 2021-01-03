@@ -1,6 +1,8 @@
 using System;
+using System.Reflection;
 using System.Text.Json.Serialization;
 using LinqToDB.Data;
+using MediatR;
 using MicroRabbit.Infrastructure.IoC;
 using MicroRabbit.Users.Data.Context;
 using MicroRabbit.Users.Domain.Models;
@@ -29,10 +31,14 @@ namespace MicroRabbit.Users.API
              services.AddControllers()
                 .AddJsonOptions(x => x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
             (services ?? throw new ArgumentNullException(nameof(services))).AddSingleton<DbLoggerCategory.Database>();
+            services.AddTransient<IDisposable>(x=> UserDataBaseFactory.NewUserDataBase.Value);
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+
             DependencyContainer.RegisterServices(services);
+            
         }
 
-         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {

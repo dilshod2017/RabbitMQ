@@ -20,16 +20,15 @@ namespace MicroRabbit.Users.API.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private IDisposable _db { get; }
         public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
          }
 
         [HttpGet]
-        public async Task<IEnumerable<dynamic>> Get()
+        public async Task<IEnumerable<dynamic>> Get([FromServices] IDisposable db)
         {
-            using var _db = UserDataBaseFactory.NewUserDataBase.Value;
+            using var _db = db;
             var repo = new UserRepository(_db);
             var p = await repo.GetAll();
             return p;
